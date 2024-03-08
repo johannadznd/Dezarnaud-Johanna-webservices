@@ -27,8 +27,6 @@ const queryBuilder = {
                 ...mongooseSkip
             }
         }
-        console.log(findObjectParams)
-        // console.log(JSON.stringify(findObjectParams, null, 4))
         return findObjectParams
 
     },

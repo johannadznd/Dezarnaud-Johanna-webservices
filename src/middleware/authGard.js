@@ -17,7 +17,6 @@ const exposeMiddleware = {
                 req.userId = verify.id
                 return next()
             } catch (error) {
-                console.log(error.message)
                 return res.status(401).send('Unauthorized')
             }
         }

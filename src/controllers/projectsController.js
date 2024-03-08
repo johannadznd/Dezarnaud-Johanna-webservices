@@ -1,5 +1,4 @@
 import projectsService from "#src/services/projectsService";
-
 const exposeController = {
   createProject: async (req, res) => {
     const { body } = req;
@@ -36,15 +35,27 @@ const exposeController = {
 
   allProjects: async (req, res) => {
     const { query } = req;
-    console.log(query);
     const allProjects = await projectsService.findAllProject(query);
     return res.json(allProjects);
   },
 
   getLastProject: async (req, res) => {
-    const query = { sort: "-createdAt", limit: "3" };
-    const allProjects = await projectsService.findAllProject(query);
-    return res.json(allProjects);
+    const keyCache = "last_project";
+    const onCache = await redisClient.get(keyCache);
+    if (onCache) {
+      res.set("x-cache", "HIT");
+      return res.json(JSON.parse(onCache));
+    } else {
+      const query = { sort: "-createdAt", limit: "3" };
+      const lastProjects = await projectsService.findAllProject(query);
+
+      if (!lastProjects) return res.sendStatus(404);
+      await redisClient.set("last_project", JSON.stringify(lastProjects), {
+        EX: 20,
+      });
+      res.set("x-cache", "MISS");
+      return res.json(lastProjects);
+    }
   },
 
   oneProject: async (req, res) => {

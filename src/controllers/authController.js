@@ -47,7 +47,6 @@ const exposeController = {
             const accessToken = signJwt({payload:tokenPayload,expiresIn:'1d'}) 
             return res.json({accessToken,token_type:'Bearer'})
         } catch (error) {
-            console.log(error)
             return res.sendStatus(401); // expired refresh token
         }
     }
