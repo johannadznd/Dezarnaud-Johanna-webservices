@@ -4,7 +4,10 @@ const { Schema } = mongoose;
 const projectSchema = new Schema(
   {
     name: String,
-    team: [Schema.Types.Mixed],
+    team:[{
+      ref:'users',
+      type     : mongoose.Schema.Types.ObjectId
+  }],
   },
   { timestamps: true }
 );
