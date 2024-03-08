@@ -1,4 +1,6 @@
 import projectsService from "#src/services/projectsService";
+import {redisClient,get} from '#src/services/redisClient';
+
 const exposeController = {
   createProject: async (req, res) => {
     const { body } = req;
