@@ -1,5 +1,9 @@
 import express from 'express';
-import ping from './ping.js';
+import users from './users.js';
+import skills from './skills.js';
+import auth from './auth.js';
+import roles from './roles.js';
+import projects from './projects.js'
 
 const router = express.Router();
 
@@ -10,9 +14,10 @@ router.get('/', (req, res) => {
   });
 });
 
-
-
-// api/v1/ping 
-router.use('/ping', ping);
+router.use('/users', users);
+router.use('/skills', skills);
+router.use('/auth', auth);
+router.use('/roles', roles);
+router.use('/projects', projects);
 
 export default router;
